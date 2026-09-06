@@ -1,0 +1,1 @@
+Qual o maior valor da coluna MDTR_UND?

@@ -1,0 +1,1 @@
+Mostre qual a soma de todos os elementos da coluna CPV_UND?

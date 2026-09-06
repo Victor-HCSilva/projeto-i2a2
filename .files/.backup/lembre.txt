@@ -1,0 +1,2 @@
+O agente procura pelo nome do arquivo definido no arquivo .env (dataset.csv).
+Sem isso o modelo gera erro pois não vaiconseguir processar o banco vetorial para consultas.''

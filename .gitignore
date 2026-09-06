@@ -1,0 +1,16 @@
+/.venv/*
+.env
+vevn/*
+__pycache__/*
+vectors/data_vector/*
+.log/
+chroma_db_agente_local/
+.pytest_cache/
+*.db
+*.html
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
