@@ -1,35 +1,25 @@
-# =========================================
-# Dockerfile final otimizado para seu projeto
-# Local: ./.docker/Dockerfile
-# =========================================
+FROM python:3.12-slim
 
-# 1️⃣ Imagem base com Python 3.12 slim
-FROM python:3.12-slim-bullseye
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
 
-# 2️⃣ Variável de trabalho
 WORKDIR /app
 
-# 3️⃣ Atualizar pacotes e instalar dependências do sistema
-RUN apt update && apt upgrade -y && \
-    apt install -y git curl build-essential && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# 4️⃣ Copiar requirements e arquivos principais
-COPY requirements.txt /app/requirements.txt
-COPY .docker/setup/setup.sh /app/setup.sh
-COPY main.py /app/
-COPY app.py /app/
-COPY utils/ /app/utils/
-COPY tools/ /app/tools/
-COPY vectors/ /app/vectors/
-COPY configs/ /app/configs/
-COPY schemas/ /app/schemas/
+COPY requirements.txt ./requirements.txt
+RUN python -m pip install --upgrade pip \
+    && python -m pip install -r requirements.txt
 
-# 5️⃣ Permissão de execução e execução do script de setup
-RUN chmod +x /app/setup.sh && /app/setup.sh
+COPY app.py ./app.py
+COPY componentes/ ./componentes/
+COPY configs/ ./configs/
 
-# 6️⃣ Expor porta do Streamlit
+RUN mkdir -p /app/.files /app/.streamlit
+
 EXPOSE 8501
 
-# 7️⃣ Comando padrão ao iniciar container
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]

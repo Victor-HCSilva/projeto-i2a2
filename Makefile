@@ -5,18 +5,18 @@ BLUE="\e[34m"
 RESET="\e[0m"   # Reseta para a cor padrão
 
 install:
-	@echo "$(BLUE)Iniciando setup do ambiente"
-	@echo ""
-	@echo "Instalando dependencias"
-	@echo ""
-	@cd setup/
-	@chmod +x setup.sh
-	# Setup inciando ambiente python e intalando dependencias
-	# Python, e Ollhama
-	@./setup.sh
+	@echo "$(BLUE)Iniciando setup do ambiente$(RESET)"
+	@chmod +x .docker/setup/setup.sh
+	@.docker/setup/setup.sh
 run:
 	@echo ""
-	@streamlit run app.py
+	@python -m streamlit run app.py
+
+docker-build:
+	@docker build -f .docker/Dockerfile -t projeto-i2a2:latest .
+
+docker-run:
+	@docker run --rm -p 8501:8501 --env-file .env projeto-i2a2:latest
 
 save:
 	@git add . ; git commit
